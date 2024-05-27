@@ -23,17 +23,18 @@ list_of_files = [
     "dvc.yaml",
     "params.yaml",
     "requirements.txt",
-    "research/trials.ipynb"
+    "setup.py",
+    "research/trials.ipynb",
 ]
 
 for file_path in list_of_files:
     file_path = Path(file_path)
-    file_directory, file_name = os.path.split(file_path)
+    folder_name, file_name = os.path.split(file_path)
 
-    if file_directory !="":
-        os.makedirs(file_directory, exist_ok=True)
-        logging.info(f"Creating Directory: {file_directory} for the file {file_name}")
-    if (os.path.exists(file_path)) or (os.path.getsize(file_path) == 0):
+    if folder_name !="":
+        os.makedirs(folder_name, exist_ok=True)
+        logging.info(f"Creating Directory: {folder_name} for the file {file_name}")
+    if (not os.path.exists(file_path)) or (os.path.getsize(file_path) == 0):
         with open(file_path, "w") as f:
             pass
             logging.info("Creating empty file: {file_path}")
