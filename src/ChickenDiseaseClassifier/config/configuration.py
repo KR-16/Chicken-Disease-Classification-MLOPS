@@ -1,6 +1,6 @@
 from ChickenDiseaseClassifier.constants import *
 from ChickenDiseaseClassifier.utils.common import readYaml, createDirectories
-from ChickenDiseaseClassifier.entity.config_entity import DataIngestionConfig
+from ChickenDiseaseClassifier.entity.config_entity import (DataIngestionConfig, PrepareBaseModelConfig)
 
 class ConfiguationManager:
 
@@ -30,3 +30,20 @@ class ConfiguationManager:
             )
          
          return data_ingestion_config
+    
+    def get_prepare_base_model_config(self) -> PrepareBaseModelConfig:
+        config = self.config.prepare_base_model
+
+        createDirectories([config.root_directory])
+
+        prepare_base_mode_config = PrepareBaseModelConfig(
+            root_directory=Path(config.root_directory),
+            base_model_path=Path(config.base_model_path),
+            updated_base_model_path=Path(config.updated_base_model_path),
+            params_image_size=self.params.IMAGE_SIZE,
+            params_include_top=self.params.INCLUDE_TOP,
+            params_weights=self.params.WEIGHTS,
+            params_class=self.params.CLASSES,
+            params_learning_rate=self.params.LEARNING_RATE
+        )
+        return prepare_base_mode_config
